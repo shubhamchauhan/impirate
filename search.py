@@ -1,7 +1,7 @@
 from googleapiclient.discovery import build
 import pprint
 
-class search:
+class Search:
     def __init__(self):
         self._my_api_key = "AIzaSyAjPcYfHVtTbE5QjsapKaPOAazBULRQxis"
         self._my_cse_id = "016486028690415270981:qlzofnni66w"
@@ -19,5 +19,3 @@ class search:
 #     'dangal full movie online', my_api_key, my_cse_id, num=10)
 # for result in results:
 #     pprint.pprint(result)
-ser = search()
-print ser.google_search("srinivas")

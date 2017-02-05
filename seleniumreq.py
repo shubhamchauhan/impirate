@@ -13,6 +13,6 @@ url = "http://www.hdmovieswatch.net/watch-dangal-2016-full-movie-online-for-dvdr
 driver = webdriver.Chrome()
 driver.get(url)
 
-WebDriverWait(driver, 2).until(EC.visibility_of_element_located((By.ID, "videocontainer")))
+WebDriverWait(driver, 2).until(EC.visibility_of_element_located((By.ID, "video")))
 src = driver.page_source
 print(src)

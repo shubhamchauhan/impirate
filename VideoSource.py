@@ -17,37 +17,46 @@ class VidSource(object):
         self.keys = keyclass
         self.count = 0
         self.query = query
-    
+
     def __getUrlSource__(self, url):
-        source_object = requests.get(url)
-        soup = BeautifulSoup(source_object.text, 'html.parser')
-        return(soup)
-        
+        if "http" in url:
+            source_object = requests.get(url)
+            soup = BeautifulSoup(source_object.text, 'html.parser')
+            return(soup)
+        else:
+            source_object = requests.get('http://csb.stanford.edu/class/public/pages/sykes_webdesign/05_simple.html')
+            soup = BeautifulSoup(source_object.text, 'html.parser')
+            return(soup)
+
     def _getLinks_(self, termlist, soup):
         for i in termlist:
             self._loadIframes_(i, soup)
-            
+
     def _loadIframes_(self, i, soup):
         k = soup.findAll(i)
         self.count = self.count + 1
         if len(k)>0:
             for j in k:
-                if j['src'] is None:
-                    soupb = self.__getUrlSource__(j['src'])
-                    if self.count < 4:
-                        self._getLinks_(['video', 'embed'], soupb)
+                if j.has_attr('src') and j['src'] is None:
+                    if self.count < 2:
+                        try:
+                            print j['src']
+                            soupb = self.__getUrlSource__(j['src'])
+                            self._getLinks_(['video', 'embed'], soupb)
+                        except:
+                            pass
                     else:
                         pass
-                    
-                if j['src'] is not None:
+
+                if j.has_attr('src') and j['src'] is not None:
                     self._filter_(j['src'])
-                    
+
     def _filter_(self, url):
         soup = self.__getUrlSource__(url)
         k = soup.findAll('<video>')
         if k is not None:
             self.links.append(url)
-    
+
     def getResults(self):
         self.soupa = self.__getUrlSource__(self.url)
         self._getLinks_(self.keys, self.soupa)
@@ -56,11 +65,11 @@ class VidSource(object):
 
 # In[34]:
 
-if __name__ == '__main__':
-    address = 'http://hindimoviesonline.watch/dangal-full-movie-online/'
-    query = 'dangal'
-    k = VidSource(address, query)
-    print(k.getResults())
+# if __name__ == '__main__':
+#     address = 'http://hindimoviesonline.watch/dangal-full-movie-online/'
+#     query = 'dangal'
+#     k = VidSource(address, query)
+#     print(k.getResults())
 
 
 # In[ ]:
@@ -69,6 +78,3 @@ if __name__ == '__main__':
 
 
 # In[ ]:
-
-
-

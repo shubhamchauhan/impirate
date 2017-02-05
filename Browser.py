@@ -5,7 +5,7 @@
 
 import os
 import sys
-import wget 
+import wget
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,10 +14,11 @@ from selenium.webdriver.common.by import By
 
 
 class Browse(object):
-    
+    def __init__(self):
+        self.drivers = webdriver.Firefox()
     def run(self, urls):
         results = []
-        driver = webdriver.Chrome()
+        driver = self.drivers
         for i in urls:
             url = i
             driver.get(url)
@@ -27,6 +28,3 @@ class Browse(object):
             except:
                 pass
         return(results)
-
-
-

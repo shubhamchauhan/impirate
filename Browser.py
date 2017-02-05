@@ -21,8 +21,8 @@ class Browse(object):
         driver = self.drivers
         for i in urls:
             url = i
-            driver.get(url)
             try:
+                driver.get(url)
                 p = driver.find_element_by_tag_name('video').get_attribute('duration')
                 results.append([url,p])
             except:
